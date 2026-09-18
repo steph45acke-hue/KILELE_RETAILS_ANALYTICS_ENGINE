@@ -150,9 +150,38 @@ if not df.empty:
 else:
    st.info("No transaction data available for advanced interactive plotting.")
 
+#add a date range filter in the side bar
+st.sidebar.markdown("---")
+st.sidebar.header("📅 Date Range Filter")
+
+
 #finding the minimum and maximum dates available for this branch's data
 if not df.empty:
    min_date = pd.to_datetime(df["transaction_date"]).min().date()
    max_date = pd.to_datetime(df["transaction_date"]).max().date()
+   #create a date input widget in the sidebar
+   date_selection =st.sidebar.date_input(
+      "Select Data Range",
+      value=[min_date,max_date],
+      min_value=min_date,
+      max_value=max_date,
+   )
+   #checking if the user selected a full range or just a single date
+   if isinstance(date_selection, tuple) and len(date_selection) == 2:
+    start_date, end_date = date_selection
+   else:
+       start_date = end_date = (
+        date_selection[0]
+        if isinstance(date_selection, (list, tuple))
+        else date_selection
+    )
+
+   #filtering the dataframe based on the selected data range
+   df = df[
+      (pd.to_datetime(df["transaction_date"]).dt.date >= start_date)
+      & (pd.to_datetime(df["transaction_date"]).dt.date <= end_date)
+   ]
+
+
 
    
