@@ -1,5 +1,7 @@
 import mysql.connector
 import pandas as pd
+import plotly.express as px
+
 
 #establishing our connection
 db_connection = mysql.connector.connect(
@@ -61,9 +63,39 @@ df_daily = pd.read_sql(daily_query, db_connection)
 print("---3.Daily sales performance trend---")
 print(df_daily,"\n")
 
+#plotly visualization
+print("Generating plotly visual dashboards...")
+fig_branch = px.bar(
+    df_branches,
+    x='branch_name',
+    y='gross_revenue',
+    color ='branch_name',
+    title = 'Kilele Retail - Gross Revenue by Branch',
+    labels = {'branch_name': 'Branch Location','gross_revenue': 'Gross Revenue (KES)'},
+    text = 'gross_revenue'
+)
+fig_branch.update_traces(texttemplate='%{text:2s}',textposition = 'outside')
 
+#saving the chart as a html
+
+fig_branch.write_html("branch_revenue_chart.html")
+
+#line chart for daily revenue trend
+fig_daily = px.line(
+    df_daily,
+    x='transaction_date',
+    y='daily_revenue',
+    markers = True,
+    title = 'Kilele Retail - Daily Revenue Trend Over Time',
+    labels = {'transaction_date':'Transaction Date', 'daily_revenue':'Daily Revenue(KES)'}
+) 
+
+#saving our chart as html
+fig_daily.write_html("daily_sales_trend.html")
+
+fig_branch.show()
+fig_daily.show()
 
 db_connection.close()
 print("Database connection successfully closed.")
-
 
