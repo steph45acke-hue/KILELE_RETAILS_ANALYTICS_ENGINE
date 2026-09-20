@@ -29,9 +29,18 @@ GROUP BY b.branch_name
 ORDER BY gross_revenue DESC;
 """
 df_branch_summary = pd.read_sql(aggregated_query,db_connection)
+#calculating executive KPIs using pandas 
+total_gross_revenue = df_branch_summary['gross_revenue'].sum()
+total_units = df_branch_summary['total_units_sold'].sum()
+top_branch = df_branch_summary.iloc[0]['branch_name']
+top_branch_revenue = df_branch_summary.iloc[0]['gross_revenue']
 
-print("Here is our aggregated branch revenue dataframe:")
-print(df_branch_summary,"\n")
+#a clean executive summary dashboard
+print("kilele retail executive summary kpi's")
+print(f"Total Gross Revenue:KES {total_gross_revenue:,.2f}")
+print(f"Total units sold:{total_units:,} units ")
+print("Top-Performing Branch:{top_branch} (KES {top_branch_revenue:,.2f})")
+
 
 #creating an interactive plotly bar chart
 print("Generating plotly interactive chart")
