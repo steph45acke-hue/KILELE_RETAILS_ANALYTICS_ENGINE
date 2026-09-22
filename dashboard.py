@@ -30,4 +30,7 @@ try:
 except Exception as e:
     st.error(f"Database connection failed:{e}")
     st.stop()
-    
+
+#side bar navigation and filters
+st.sidebar.header("Navigation & Filters")
+app_mode = st.sidebar.selectbox("Choose View",["Executive Overview","Branch Performance Clusters","Sales Trend Forecasting"])
