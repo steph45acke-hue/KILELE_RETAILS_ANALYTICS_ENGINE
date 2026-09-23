@@ -57,4 +57,34 @@ if selected_branch != "All Branches":
     kpi_query += f"WHERE t.branch_id = '{branch_id_val}'"
 
     kpi_df = pd.read_sql(kpi_query,conn)
-    
+
+
+col1,col2,col3 = st.columns(3)
+col1.metric("Gross Revenue",f"KES {kpi_df['gross_revenue'].values[0]:,2f}")
+col2.metric("Total Transactions",f"{kpi_df['total_transactions'].values[0]:,}")
+col3.metric("Units Sold",f"{kpi_df['total_units'].values[0]:,}")
+
+
+
+st.markdown("---")
+
+branch_rev_query = """
+SELECT b.branch_name,SUM(t.total_amount) AS revenue
+FROM transactions t
+JOIN branches b ON t.branch_id = b.branch_id
+GROUP BY b.branch_name
+ORDER BY revenue DESC;
+"""
+branch_rev_df = pd.read_sql(branch_rev_query,conn)
+
+fig_branch = px.bar(
+    branch_rev_df,
+    x = 'branch_name',
+    y = 'revenue',
+    color = 'branch_name',
+    title = "Gross Revenue by Branch Location",
+    labels = {'branch_name':'Branch','revenue':'Revenue (KES)'}
+)
+
+st.plotly_chart(fig_branch,use_container_width = True)
+
