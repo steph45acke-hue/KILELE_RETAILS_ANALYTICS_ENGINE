@@ -1,5 +1,12 @@
 # 🚀 Kilele Retail Analytics Engine
 
+
+<p align="center">
+  <img src="kilele_banner.png" alt="Kilele Retail Analytics Engine Executive Banner" width="100%">
+</p>
+
+---
+
 <p align="center">
   <b>An end-to-end retail data pipeline connecting MySQL, Python automation, and an interactive Streamlit executive dashboard.</b>
 </p>
