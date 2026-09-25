@@ -1,6 +1,8 @@
 # 🚀 Kilele Retail Analytics Engine
 
 
+# 🚀 Kilele Retail Analytics Engine
+
 <p align="center">
   <img src="kilele_banner.png" alt="Kilele Retail Analytics Engine Executive Banner" width="100%">
 </p>
