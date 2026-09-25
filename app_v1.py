@@ -1,5 +1,7 @@
-import mysql.connector
+
+# Updated analytics branch check
 import pandas as pd
+import mysql.connector
 import streamlit as st
 import plotly.express as px
 
